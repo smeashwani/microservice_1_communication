@@ -1,5 +1,7 @@
 package com.training.userms.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,17 +13,21 @@ import com.training.userms.model.UserDto;
 import com.training.userms.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserService {
 
+	private Environment env;
 	private UserRepository userRepository;
 	private WebClient webClient;
 
 
-	public UserDto save(UserEntity user) {
-		return mapToUser(userRepository.save(user));
+	public ResponseDto save(UserEntity user) {
+		UserEntity userEntity = userRepository.save(user);
+		return getUser(userEntity.getId());
 	}
 
     public ResponseDto getUser(Long userId) {
