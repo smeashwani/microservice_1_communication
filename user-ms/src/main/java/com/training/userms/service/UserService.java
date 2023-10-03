@@ -1,8 +1,6 @@
 package com.training.userms.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -36,13 +34,12 @@ public class UserService {
         UserDto userDto = mapToUser(user);
 
         DepartmentDto departmentDto = webClient.get()
-                 .uri("http://localhost:8080/api/departments/" + user.getDepartmentId())
+                 .uri(env.getProperty("hostname.department")+"/api/departments/" + user.getDepartmentId())
                          .retrieve()
                          .bodyToMono(DepartmentDto.class)
                          .block();
+        userDto.setDepartment(departmentDto);
         responseDto.setUser(userDto);
-        responseDto.setDepartment(departmentDto);
-
         return responseDto;
     }
 	
