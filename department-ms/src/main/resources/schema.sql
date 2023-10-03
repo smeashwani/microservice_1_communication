@@ -1,0 +1,2 @@
+drop table if exists departments;
+create table departments (id int not null AUTO_INCREMENT, departmentName varchar(100) ,departmentAddress varchar(100), departmentCode varchar(100), PRIMARY KEY ( id ));
