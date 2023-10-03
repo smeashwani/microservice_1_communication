@@ -1,11 +1,11 @@
-POST- http://localhost:8080/api/departments
+POST- http://localhost:9999/api/departments
 {
     "departmentName":"IT",
     "departmentAddress" :"INDIA",
     "departmentCode": "IT_INDIA"
 }
 
-POST - http://localhost:8081/api/users
+POST - http://localhost:8888/api/users
 {
 	"firstName": "Guest",
 	"lastName": "First",
@@ -13,4 +13,4 @@ POST - http://localhost:8081/api/users
 	"departmentId": "1"
 }
 
-GET-  http://localhost:8081/api/users/1
+GET-  http://localhost:8888/api/users/1

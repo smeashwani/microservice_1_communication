@@ -20,18 +20,18 @@ import lombok.AllArgsConstructor;
 @RequestMapping("api/users")
 @AllArgsConstructor
 public class UserController {
-	
-	 private UserService userService;
 
-	    @PostMapping
-	    public ResponseEntity<UserDto> saveUser(@RequestBody UserEntity user){
-	    	UserDto savedUser = userService.save(user);
-	        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-	    }
+	private UserService userService;
 
-	    @GetMapping("/{id}")
-	    public ResponseEntity<ResponseDto> getUser(@PathVariable("id") Long userId){
-	        ResponseDto responseDto = userService.getUser(userId);
-	        return ResponseEntity.ok(responseDto);
-	    }
+	@PostMapping
+	public ResponseEntity<ResponseDto> saveUser(@RequestBody UserEntity user) {
+		ResponseDto savedUser = userService.save(user);
+		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ResponseDto> getUser(@PathVariable("id") Long userId) {
+		ResponseDto responseDto = userService.getUser(userId);
+		return ResponseEntity.ok(responseDto);
+	}
 }
