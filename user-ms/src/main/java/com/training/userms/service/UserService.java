@@ -18,8 +18,9 @@ public class UserService {
 	private UserRepository userRepository;
 	private APIClient apiClient;
 
-	public UserDto save(UserEntity user) {
-		return mapToUser(userRepository.save(user));
+	public ResponseDto save(UserEntity user) {
+		UserEntity userEntity = userRepository.save(user);
+		return getUser(userEntity.getId());
 	}
 
     public ResponseDto getUser(Long userId) {
@@ -28,8 +29,8 @@ public class UserService {
         UserDto userDto = mapToUser(user);
 
         DepartmentDto departmentDto = apiClient.getDepartmentById(user.getDepartmentId());
+        userDto.setDepartment(departmentDto);
         responseDto.setUser(userDto);
-        responseDto.setDepartment(departmentDto);
 
         return responseDto;
     }
