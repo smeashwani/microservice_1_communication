@@ -19,8 +19,9 @@ public class UserService {
 	private UserRepository userRepository;
 	private RestTemplate restTemplate;
 
-	public UserDto save(UserEntity user) {
-		return mapToUser(userRepository.save(user));
+	public ResponseDto save(UserEntity user) {
+		UserEntity userEntity = userRepository.save(user);
+		return getUser(userEntity.getId());
 	}
 
     public ResponseDto getUser(Long userId) {
@@ -32,8 +33,8 @@ public class UserService {
                 .getForEntity("http://department-ms/api/departments/" + user.getDepartmentId(),
                 DepartmentDto.class);
         DepartmentDto departmentDto = responseEntity.getBody();
+        userDto.setDepartment(departmentDto);
         responseDto.setUser(userDto);
-        responseDto.setDepartment(departmentDto);
 
         return responseDto;
     }
