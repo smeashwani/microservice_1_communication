@@ -55,18 +55,6 @@
 			<scope>runtime</scope>
 			<version>2.1.214</version>
 		</dependency>
-		
-		<!--  Cloud Config -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-
-		<!--  Actuator -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
