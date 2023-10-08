@@ -39,7 +39,7 @@ public class UserService {
 
 		DepartmentDto departmentDto = responseEntity.getBody();
 
-		log.info("GetUser Response code: {}", responseEntity.getStatusCode());
+		log.info("Deparment Service Response code: {}", responseEntity.getStatusCode());
 		userDto.setDepartment(departmentDto);
 		responseDto.setUser(userDto);
 
