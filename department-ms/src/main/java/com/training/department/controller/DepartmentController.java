@@ -1,5 +1,6 @@
 package com.training.department.controller;
 
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import lombok.AllArgsConstructor;
 public class DepartmentController {
 
     private DepartmentService departmentService;
+    
+    private Environment env;
 
     @PostMapping
     public ResponseEntity<Department> saveDepartment(@RequestBody Department department){
@@ -30,6 +33,7 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long departmentId){
         Department department = departmentService.getDepartmentById(departmentId);
+        department.setPort(env.getProperty("local.server.port"));
         return ResponseEntity.ok(department);
     }
 }
