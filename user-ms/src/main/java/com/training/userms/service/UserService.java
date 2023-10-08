@@ -38,7 +38,7 @@ public class UserService {
                          .retrieve()
                          .bodyToMono(DepartmentDto.class)
                          .block();
-		log.info("Deparment Service Response code: {}", responseEntity.getStatusCode());
+		log.info("Deparment Service Response code: {}", departmentDto.getId());
         userDto.setDepartment(departmentDto);
         responseDto.setUser(userDto);
         return responseDto;
