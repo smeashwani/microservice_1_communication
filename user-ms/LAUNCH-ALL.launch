@@ -17,19 +17,13 @@
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.2.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.2.enabled" value="true"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.2.mode" value="inherit"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.2.name" value="LAUNCH-config-server-ms"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.2.name" value="LAUCH-DepartmentMs"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.3.action" value="OUTPUT_REGEXP"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.3.actionParam" value="process running for"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.3.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.3.enabled" value="true"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.3.mode" value="inherit"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.3.name" value="LAUCH-DepartmentMs"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.4.action" value="OUTPUT_REGEXP"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.4.actionParam" value="process running for"/>
-    <booleanAttribute key="org.eclipse.debug.core.launchGroup.4.adoptIfRunning" value="false"/>
-    <booleanAttribute key="org.eclipse.debug.core.launchGroup.4.enabled" value="true"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.4.mode" value="inherit"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.4.name" value="LAUNCH-UserMs"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.3.name" value="LAUNCH-UserMs"/>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
     </listAttribute>
