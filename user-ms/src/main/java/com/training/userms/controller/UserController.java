@@ -24,8 +24,11 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<ResponseDto> saveUser(@RequestBody UserEntity user) {
-		ResponseDto savedUser = userService.save(user);
+	public ResponseEntity<ResponseDto> saveUser(@RequestBody UserDto user) {
+		UserEntity userEntity = userService.save(user);
+		user.getDepartment().setUserId(userEntity.getId());
+		userService.createDepartment(user);
+		ResponseDto savedUser = userService.getUser(userEntity.getId());
 		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 	}
 

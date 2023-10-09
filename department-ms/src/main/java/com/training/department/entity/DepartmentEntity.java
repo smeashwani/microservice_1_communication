@@ -1,7 +1,6 @@
 package com.training.department.entity;
 
 import jakarta.persistence.Column;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +11,7 @@ import lombok.Data;
 @Entity
 @Table(name = "departments")
 @Data
-public class Department {
+public class DepartmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,4 +21,5 @@ public class Department {
     private String departmentAddress;
     @Column(name="departmentCode")
     private String departmentCode;
+    private Long userId;
 }
