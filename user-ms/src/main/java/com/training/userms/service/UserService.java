@@ -1,6 +1,5 @@
 package com.training.userms.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,17 +25,19 @@ public class UserService {
 
 	public ResponseDto save(UserEntity user) {
 		UserEntity userEntity = userRepository.save(user);
+		log.info("Save user :- {}",userEntity);
 		return getUser(userEntity.getId());
 	}
 
 	public ResponseDto getUser(Long userId) {
 		ResponseDto responseDto = new ResponseDto();
 		UserEntity user = userRepository.findById(userId).get();
+		log.info("Find user :- {}",user);
 		UserDto userDto = mapToUser(user);
 
 		ResponseEntity<DepartmentDto> responseEntity = restTemplate
 				.getForEntity(env.getProperty("hostname.department") + "/api/departments/" + user.getDepartmentId(), DepartmentDto.class);
-
+		log.info("Fetch deparment from department-ms :- {}",responseEntity);
 		DepartmentDto departmentDto = responseEntity.getBody();
 
 		log.info("Deparment Service Response code: {}", responseEntity.getStatusCode());

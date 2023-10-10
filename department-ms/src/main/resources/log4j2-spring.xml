@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			 <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level - %msg%n"/>
+		</Console>
+	<!-- token="YOUR_SPLUNK_HEC_TOKEN" -->
+		<SplunkHttp level="info" name="LogToSplunk" 
+			class="com.splunk.logging.HttpEventCollectorLogbackAppender" 
+			url="http://localhost:8088"
+			token="08b18b24-6c6f-49be-a06a-e854a52f6513" 
+			host="department-ms"
+			index="http_log_event_collector_idx" 
+			source="http_log_event"
+			sourcetype="_json" 
+			messageFormat="text"
+			disableCertificateValidation="true">
+			<PatternLayout>
+				<PatternLayout pattern="%m"/>
+			</PatternLayout>
+		</SplunkHttp>
+
+		<RollingFile name="RollingFile"
+			fileName="./logs/spring-boot-logger-log4j2.log"
+			filePattern="./logs/$${date:yyyy-MM}/spring-boot-logger-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<pattern>%d %p %C{1.} [%t] %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<!-- LOG everything at INFO level -->
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="LogToSplunk" />
+		</Root>
+		<Logger name="eventLogger" level="info" additivity="false">
+			<AppenderRef ref="LogToSplunk" />
+		</Logger>
+		<!-- LOG "com.training*" at TRACE level -->
+		<Logger name="com.training" level="trace"></Logger>
+	</Loggers>
+
+</Configuration>
