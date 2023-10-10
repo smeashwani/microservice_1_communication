@@ -33,11 +33,11 @@ public class UserService {
 	}
 
 	
-	@Retry(name = "user-retry")
+	@Retry(name = "user-retry", fallbackMethod = "fallbackGetUser")
 	public ResponseDto getUser(Long userId) {
 		count++;
 		log.info("Retry -> {}", count);
-		if(count <=5) {
+		if(count > 0) {
 			throw new RuntimeException("retry");
 		}
 		ResponseDto responseDto = new ResponseDto();
@@ -46,6 +46,25 @@ public class UserService {
 
 		ResponseEntity<DepartmentDto> responseEntity = restTemplate
 				.getForEntity(env.getProperty("hostname.department") + "/api/departments/" + user.getDepartmentId(), DepartmentDto.class);
+
+		DepartmentDto departmentDto = responseEntity.getBody();
+
+		log.info("Deparment Service Response code: {}", responseEntity.getStatusCode());
+		userDto.setDepartment(departmentDto);
+		responseDto.setUser(userDto);
+
+		return responseDto;
+	}
+	
+	
+	public ResponseDto fallbackGetUser(Long userId,Exception ex) {
+		log.info("Retry Handle by Fetch Department By UserId - {} ",userId);
+		ResponseDto responseDto = new ResponseDto();
+		UserEntity user = userRepository.findById(userId).get();
+		UserDto userDto = mapToUser(user);
+
+		ResponseEntity<DepartmentDto> responseEntity = restTemplate
+				.getForEntity(env.getProperty("hostname.department") + "/api/departments/users/" + userId, DepartmentDto.class);
 
 		DepartmentDto departmentDto = responseEntity.getBody();
 

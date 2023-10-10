@@ -22,4 +22,5 @@ public class Department {
     private String departmentAddress;
     @Column(name="departmentCode")
     private String departmentCode;
+    private Long userId;
 }

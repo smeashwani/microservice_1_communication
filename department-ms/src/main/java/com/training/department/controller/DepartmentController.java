@@ -32,4 +32,10 @@ public class DepartmentController {
         Department department = departmentService.getDepartmentById(departmentId);
         return ResponseEntity.ok(department);
     }
+    
+    @GetMapping("/users/{id}")
+    public ResponseEntity<Department> getDepartmentByUserId(@PathVariable("id") Long userId){
+        Department department = departmentService.getDepartmentByUserId(userId);
+        return ResponseEntity.ok(department);
+    }
 }
