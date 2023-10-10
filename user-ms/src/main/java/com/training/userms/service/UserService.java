@@ -11,6 +11,7 @@ import com.training.userms.model.ResponseDto;
 import com.training.userms.model.UserDto;
 import com.training.userms.repository.UserRepository;
 
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class UserService {
 	}
 
 	
-	@RateLimiter(name = "default")
+	@Bulkhead(name = "default")
 	public ResponseDto getUser(Long userId) {
 		count++;
 		log.info("Retry -> {}", count);
