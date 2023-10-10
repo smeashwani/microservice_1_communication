@@ -11,8 +11,7 @@ import com.training.userms.model.ResponseDto;
 import com.training.userms.model.UserDto;
 import com.training.userms.repository.UserRepository;
 
-import io.github.resilience4j.retry.annotation.Retry;
-import lombok.AllArgsConstructor;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +32,12 @@ public class UserService {
 	}
 
 	
-	@Retry(name = "user-retry", fallbackMethod = "fallbackGetUser")
+	@CircuitBreaker(name = "user-resiliency", fallbackMethod = "fallbackGetUser")
 	public ResponseDto getUser(Long userId) {
 		count++;
 		log.info("Retry -> {}", count);
-		if(count > 0) {
-			throw new RuntimeException("retry");
+		if(count <= 5) {
+			throw new RuntimeException("Problem in fetching details");
 		}
 		ResponseDto responseDto = new ResponseDto();
 		UserEntity user = userRepository.findById(userId).get();
@@ -58,7 +57,8 @@ public class UserService {
 	
 	
 	public ResponseDto fallbackGetUser(Long userId,Exception ex) {
-		log.info("Retry Handle by Fetch Department By UserId - {} ",userId);
+		log.info("Fallback-GetUser:  Fetch Department By UserId - {} ",userId);
+		log.info("Fallback-GetUser:  Exception  - {} ",ex.getMessage());
 		ResponseDto responseDto = new ResponseDto();
 		UserEntity user = userRepository.findById(userId).get();
 		UserDto userDto = mapToUser(user);
