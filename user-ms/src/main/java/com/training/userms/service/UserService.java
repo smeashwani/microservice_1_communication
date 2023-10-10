@@ -1,6 +1,5 @@
 package com.training.userms.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,24 +11,35 @@ import com.training.userms.model.ResponseDto;
 import com.training.userms.model.UserDto;
 import com.training.userms.repository.UserRepository;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserService {
 
-	private Environment env;
-	private UserRepository userRepository;
-	private RestTemplate restTemplate;
-
+	@NonNull private Environment env;
+	@NonNull private UserRepository userRepository;
+	@NonNull private RestTemplate restTemplate;
+	@NonNull private int count=0;
+	
 	public ResponseDto save(UserEntity user) {
 		UserEntity userEntity = userRepository.save(user);
 		return getUser(userEntity.getId());
 	}
 
+	
+	@Retry(name = "user-retry")
 	public ResponseDto getUser(Long userId) {
+		count++;
+		log.info("Retry -> {}", count);
+		if(count <=5) {
+			throw new RuntimeException("retry");
+		}
 		ResponseDto responseDto = new ResponseDto();
 		UserEntity user = userRepository.findById(userId).get();
 		UserDto userDto = mapToUser(user);
