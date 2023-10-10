@@ -11,7 +11,7 @@ import com.training.userms.model.ResponseDto;
 import com.training.userms.model.UserDto;
 import com.training.userms.repository.UserRepository;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,10 @@ public class UserService {
 	}
 
 	
-	@CircuitBreaker(name = "user-resiliency", fallbackMethod = "fallbackGetUser")
+	@RateLimiter(name = "default")
 	public ResponseDto getUser(Long userId) {
 		count++;
 		log.info("Retry -> {}", count);
-		if(count <= 5) {
-			throw new RuntimeException("Problem in fetching details");
-		}
 		ResponseDto responseDto = new ResponseDto();
 		UserEntity user = userRepository.findById(userId).get();
 		UserDto userDto = mapToUser(user);
