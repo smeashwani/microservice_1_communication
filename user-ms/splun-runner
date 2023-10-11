@@ -1,2 +1,0 @@
-docker compose -f "splunk-compose.yaml" up
-docker compose -f "splunk-compose.yaml" down
