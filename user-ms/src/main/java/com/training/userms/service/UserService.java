@@ -1,5 +1,6 @@
 package com.training.userms.service;
 
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +19,7 @@ public class UserService {
 
 	private UserRepository userRepository;
 	private RestTemplate restTemplate;
+	private Environment env;
 
 	public ResponseDto save(UserEntity user) {
 		UserEntity userEntity = userRepository.save(user);
@@ -30,7 +32,7 @@ public class UserService {
         UserDto userDto = mapToUser(user);
 
         ResponseEntity<DepartmentDto> responseEntity = restTemplate
-                .getForEntity("http://department-ms/api/departments/" + user.getDepartmentId(),
+                .getForEntity(env.getProperty("hostname.department")+ "/api/departments/" + user.getDepartmentId(),
                 DepartmentDto.class);
         DepartmentDto departmentDto = responseEntity.getBody();
         userDto.setDepartment(departmentDto);
