@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -22,4 +23,6 @@ public class Department {
     private String departmentAddress;
     @Column(name="departmentCode")
     private String departmentCode;
+    @Transient
+    private String port;
 }
