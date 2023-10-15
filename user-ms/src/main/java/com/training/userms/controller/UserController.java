@@ -25,9 +25,13 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> saveUser(@RequestBody UserDto user) {
+		// user save in db
 		UserEntity userEntity = userService.save(user);
 		user.getDepartment().setUserId(userEntity.getId());
+		// send messge to kafka for create department
 		userService.createDepartment(user);
+		
+		// get department details
 		ResponseDto savedUser = userService.getUser(userEntity.getId());
 		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 	}
