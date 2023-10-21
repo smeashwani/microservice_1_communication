@@ -37,7 +37,7 @@ public class UserService {
 	public ResponseDto getUser(Long userId) {
 		count++;
 		log.info("Retry -> {}", count);
-		if(count > 0) {
+		if(count <= 5) {
 			throw new RuntimeException("retry");
 		}
 		ResponseDto responseDto = new ResponseDto();
